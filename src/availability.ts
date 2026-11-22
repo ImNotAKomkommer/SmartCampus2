@@ -25,6 +25,13 @@ export function checkAvailability(
   end: number,
   currentTime: number
 ): CheckResult {
+  // AC1: reject non-integer or non-finite minute values before range checks.
+  if (![start, end, currentTime].every(Number.isInteger)) {
+    return {
+      status: "unavailable",
+      reason: "Invalid interval. Times must be whole minutes.",
+    };
+  }
   // AC1: 0 <= start < end <= 1440 and start strictly after current time
   if (!(start >= 0 && start < end && end <= MINUTES_PER_DAY)) {
     return {
