@@ -52,3 +52,8 @@ test("INTEGRATION empty matching list clears stale room result",()=>{
  let view=getRoomAvailabilityView([],bookings,null,660,720,540);
  assert.equal(view.room,null);assert.equal(view.result,null);assert.deepEqual(view.roomBookings,[]);
 });
+
+// Assignment #05 targeted regression: numeric minutes must be whole numbers.
+test("AC1 fractional start rejected", () => assert.equal(decision(660.5, 720), "unavailable"));
+test("AC1 fractional end rejected", () => assert.equal(decision(660, 720.5), "unavailable"));
+test("AC1 fractional current time rejected", () => assert.equal(decision(541, 570, 540.5, false, []), "unavailable"));
